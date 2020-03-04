@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/edtURL"
+            android:hint="Insertar URL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnDownload"
+        android:text="XML processing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtURL"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/btnShowSalaries"
+        android:text="Show Salaries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnDownload"/>
+
+    <Button
+        android:id="@+id/btnSalariesToFile"
+        android:text="Salaries to File"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnShowSalaries"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSalariesToFile">
+
+        <TextView
+            android:id="@+id/tvSalaries"
+            android:text="Sample Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
+
+</RelativeLayout>

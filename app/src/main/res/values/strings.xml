@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">T2-F_A18Gabrielsm</string>
+    <string name="nameHint">Introduce your name</string>
+    <string name="audioButton">Audio</string>
+    <string name="videoButton">Video</string>
+    <string name="salaryButton">Salary</string>
+    <string name="callButton">Call</string>
+    <string name="itemCor">Cor</string>
+    <string name="btnPreferences">Accept</string>
+    <string name="emptyPhoneToast">Phone field cannot be empty</string>
+    <string name="permissionDeniedToast">Permission is required</string>
+    <string name="emptyNameToast">O campo nome non pode estar baleiro</string>
+</resources>
