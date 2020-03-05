@@ -2,8 +2,12 @@ package com.example.t2_f_a18gabrielsm;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 public class SalariesDB extends SQLiteOpenHelper {
 
@@ -37,6 +41,23 @@ public class SalariesDB extends SQLiteOpenHelper {
         Long id = sqLiteDatabase.insert("salary", null, cv);
 
         return id;
+    }
+
+    public ArrayList<String> selectSalaries() {
+        ArrayList<String> salaryList = new ArrayList<>();
+        salaryList.clear();
+        Cursor select = sqLiteDatabase.rawQuery("SELECT * FROM salary", null);
+
+        salaryList.add("Total_Salary\tMonth\n");
+
+        if (select.moveToFirst()){
+            while (!select.isAfterLast()){
+                salaryList.add(select.getFloat(1) + "\t\t\t" + select.getString(0) + "\n");
+                Log.i("LINE", salaryList.get(salaryList.size()-1));
+                select.moveToNext();
+            }
+        }
+        return salaryList;
     }
 
 }

@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityPreferences"/>
+        <activity android:name=".ActivityAudio"/>
+        <activity android:name=".ActivityVideo"/>
         <activity android:name=".ActivitySalary"/>
+        <activity android:name=".ActivityPreferences"/>
         <activity android:name=".T2_F_A18GabrielSM">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

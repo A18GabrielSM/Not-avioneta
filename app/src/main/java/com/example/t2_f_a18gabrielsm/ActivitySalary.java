@@ -1,17 +1,18 @@
 package com.example.t2_f_a18gabrielsm;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -137,6 +138,7 @@ public class ActivitySalary extends AppCompatActivity {
     SalariesDB salariesDB;
 
     DownloadTask downloadTask;
+    SharedPreferences prefs;
     String xmlName;
     File xmlFile;
 
@@ -147,6 +149,8 @@ public class ActivitySalary extends AppCompatActivity {
 
         loadDatabase();
         loadClicks();
+
+        prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
 
     }
 
@@ -166,6 +170,35 @@ public class ActivitySalary extends AppCompatActivity {
         }
     }
 
+    private void showSalaries() {
+        TextView tvSalaries = findViewById(R.id.tvSalaries);
+        ArrayList<String> salariesList = salariesDB.selectSalaries();
+        tvSalaries.setText("");
+        for (String salaryLine : salariesList) {
+            tvSalaries.append(salaryLine + "\n");
+        }
+    }
+
+    private void saveToFile() {
+        ArrayList<String> salariesList = salariesDB.selectSalaries();
+        String fileName = prefs.getString("NAME", "");
+        String filePath = getExternalFilesDir(null) + File.separator + fileName;
+
+        try {
+            OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filePath, false));
+
+            for (String line : salariesList) {
+                osw.write(line);
+            }
+            osw.close();
+
+            Log.i("PATH", filePath);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void loadClicks() {
         Button btnDownload = findViewById(R.id.btnDownload);
         btnDownload.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +207,23 @@ public class ActivitySalary extends AppCompatActivity {
                 downloadXML();
             }
         });
+
+        Button btnShowSalaries = findViewById(R.id.btnShowSalaries);
+        btnShowSalaries.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSalaries();
+            }
+        });
+
+        Button btnSalariesToFile = findViewById(R.id.btnSalariesToFile);
+        btnSalariesToFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveToFile();
+            }
+        });
+
     }
 
 }

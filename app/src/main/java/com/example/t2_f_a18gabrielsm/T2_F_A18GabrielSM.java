@@ -25,6 +25,8 @@ public class T2_F_A18GabrielSM extends AppCompatActivity {
     SharedPreferences prefs;
     private int PREFERENCES_REQUEST = 0;
     private int CALL_PHONE_PERMISSION_REQUEST = 0;
+    private int RECORD_AUDIO_PERMISSION = 1;
+    private int CAMERA_PERMISSION = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +59,81 @@ public class T2_F_A18GabrielSM extends AppCompatActivity {
         btnSalary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 EditText edtName = findViewById(R.id.edtName);
-                if (!edtName.getText().toString().equals("")){
+                String name = edtName.getText().toString();
+
+                if (!name.equals("")){
+                    savePreferences(name);
+
                     Intent salary = new Intent(getApplicationContext(), ActivitySalary.class);
                     startActivity(salary);
+
                 } else {
                     Toast.makeText(T2_F_A18GabrielSM.this, R.string.emptyNameToast, Toast.LENGTH_LONG).show();
                 }
             }
         });
+
+        Button btnAudio = findViewById(R.id.btnAudio);
+        btnAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                EditText edtName = findViewById(R.id.edtName);
+                String name = edtName.getText().toString();
+
+                if (!name.equals("")) {
+                    savePreferences(name);
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(T2_F_A18GabrielSM.this, new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_PERMISSION);
+                        } else {
+                            audioActivity();
+                        }
+                    } else {
+                        audioActivity();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.emptyNameToast, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        Button btnVideo = findViewById(R.id.btnVideo);
+        btnVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= 23){
+                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                        ActivityCompat.requestPermissions(T2_F_A18GabrielSM.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
+                    } else {
+                        videoActivity();
+                    }
+                } else {
+                    videoActivity();
+                }
+            }
+        });
+
+    }
+
+    private void savePreferences(String name) {
+        prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("NAME", name);
+        editor.commit();
+    }
+
+    private void videoActivity() {
+        Intent video = new Intent(getApplicationContext(), ActivityVideo.class);
+        startActivity(video);
+    }
+
+    private void audioActivity() {
+        Intent audio = new Intent(getApplicationContext(), ActivityAudio.class);
+        startActivity(audio);
     }
 
     @SuppressLint("MissingPermission")
@@ -115,6 +183,20 @@ public class T2_F_A18GabrielSM extends AppCompatActivity {
         if (requestCode == CALL_PHONE_PERMISSION_REQUEST && grantResults.length > 0){
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 makeCall();
+            } else {
+                Toast.makeText(this, R.string.permissionDeniedToast, Toast.LENGTH_LONG).show();
+            }
+        }
+        if (requestCode == RECORD_AUDIO_PERMISSION && grantResults.length > 0){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                audioActivity();
+            } else {
+                Toast.makeText(this, R.string.permissionDeniedToast, Toast.LENGTH_LONG).show();
+            }
+        }
+        if (requestCode == CAMERA_PERMISSION && grantResults.length > 0){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                videoActivity();
             } else {
                 Toast.makeText(this, R.string.permissionDeniedToast, Toast.LENGTH_LONG).show();
             }
