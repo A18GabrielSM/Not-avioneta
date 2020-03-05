@@ -10,4 +10,7 @@
     <string name="emptyPhoneToast">Phone field cannot be empty</string>
     <string name="permissionDeniedToast">Permission is required</string>
     <string name="emptyNameToast">O campo nome non pode estar baleiro</string>
+    <string name="noAudioToast">Non hai audio reproducindose</string>
+    <string name="recordingDialog">Gravando</string>
+    <string name="recordingDialogStop">Parar</string>
 </resources>
