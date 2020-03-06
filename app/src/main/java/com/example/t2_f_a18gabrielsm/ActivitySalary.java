@@ -121,9 +121,9 @@ public class ActivitySalary extends AppCompatActivity {
 
                     for (Salary salary : salariesList){
                         if (salariesDB.insertSalary(salary) == -1){
-                            Log.i("ERROR", "Error al añadir " + salary.toString() + " a la base de datos");
+                            Log.i("ERROR", R.string.insertFailedToast + salary.toString());
                         } else {
-                            Log.i("INSERT", "Se ha insertado " + salary.toString() + " en la base de datos");
+                            Log.i("INSERT", R.string.insertSuccessToast + salary.toString());
                         }
                     }
 
@@ -166,7 +166,7 @@ public class ActivitySalary extends AppCompatActivity {
             downloadTask = new DownloadTask(downloadURL);
             downloadTask.execute();
         } else {
-            Toast.makeText(getApplicationContext(), "O campo non pode estar baleiro", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.emptyURLToast, Toast.LENGTH_LONG).show();
         }
     }
 

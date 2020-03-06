@@ -176,7 +176,7 @@ public class ActivityAudio extends AppCompatActivity {
             audiosList.add(audio.getName());
         }
 
-        ArrayAdapter<String> adapterAudios = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, audiosList);
+        ArrayAdapter<String> adapterAudios = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, audiosList);
         spnAudios = findViewById(R.id.spnAudios);
         spnAudios.setAdapter(adapterAudios);
 

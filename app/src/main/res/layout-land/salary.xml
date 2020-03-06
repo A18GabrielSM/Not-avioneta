@@ -4,38 +4,40 @@
 
         <EditText
             android:id="@+id/edtURL"
-            android:hint="Insertar URL"
+            android:text="@string/downloadURL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btnDownload"
-        android:text="XML processing"
+        android:text="@string/btnDownload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/edtURL"
-        android:layout_centerHorizontal="true"/>
+        android:layout_toLeftOf="@id/btnShowSalaries"/>
 
     <Button
         android:id="@+id/btnShowSalaries"
-        android:text="Show Salaries"
+        android:text="@string/btnShowSalaries"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/btnDownload"/>
+        android:layout_below="@id/edtURL"/>
 
     <Button
         android:id="@+id/btnSalariesToFile"
-        android:text="Salaries to File"
+        android:text="@string/btnSalariesToFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/btnShowSalaries"/>
+        android:layout_below="@id/edtURL"
+        android:layout_toRightOf="@id/btnShowSalaries"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnSalariesToFile">
+        android:layout_below="@id/btnShowSalaries">
 
         <TextView
             android:id="@+id/tvSalaries"

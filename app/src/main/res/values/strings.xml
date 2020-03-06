@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">T2-F_A18Gabrielsm</string>
-    <string name="nameHint">Introduce your name</string>
+    <string name="nameHint">Introduce teu nome</string>
     <string name="audioButton">Audio</string>
     <string name="videoButton">Video</string>
-    <string name="salaryButton">Salary</string>
-    <string name="callButton">Call</string>
+    <string name="salaryButton">Salario</string>
+    <string name="callButton">Chamar</string>
     <string name="itemCor">Cor</string>
-    <string name="btnPreferences">Accept</string>
-    <string name="emptyPhoneToast">Phone field cannot be empty</string>
-    <string name="permissionDeniedToast">Permission is required</string>
+    <string name="btnPreferences">Aceptar</string>
+    <string name="emptyPhoneToast">O teléfono non pode esar baleiro</string>
+    <string name="permissionDeniedToast">Precísanse os permisos</string>
     <string name="emptyNameToast">O campo nome non pode estar baleiro</string>
-    <string name="noAudioToast">Non hai audio reproducindose</string>
+    <string name="noAudioToast">Non hai audio reproducíndose</string>
     <string name="recordingDialog">Gravando</string>
     <string name="recordingDialogStop">Parar</string>
     <string name="btnPlay">Reproducir</string>
@@ -18,4 +18,14 @@
     <string name="btnRewind">Rebobinar</string>
     <string name="btnPause">Pausar</string>
     <string name="btnRecord">Gravar</string>
+    <string name="insertFailedToast">"Error ao engadir a base de datos: "</string>
+    <string name="insertSuccessToast">"Engadido a base de datos: "</string>
+    <string name="emptyURLToast">O campo non pode estar baleiro</string>
+    <string name="downloadURL">https://manuais.iessanclemente.net/images/5/53/Salaries2.xml</string>
+    <string name="btnDownload">Procesado XML</string>
+    <string name="btnShowSalaries">Mostrar Salarios</string>
+    <string name="btnSalariesToFile">Salarios a arquivo</string>
+    <string name="rbRed">Vermello</string>
+    <string name="rbGreen">Verde</string>
+    <string name="rbBlue">Azul</string>
 </resources>

@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.MediaController;
@@ -66,12 +67,31 @@ public class ActivityVideo extends AppCompatActivity {
                 Date date = new Date();
                 String videoName = sdf.format(date);
 
+                StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                StrictMode.setVmPolicy(builder.build());
+
                 videosDir = new File(videosDirPath, videoName + ".mp4");
                 Intent recordVideo = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                 recordVideo.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(videosDir));
                 startActivityForResult(recordVideo, RECORD_VIDEO_REQUEST);
             }
         });
+
+        spnVideos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedVideo = spnVideos.getSelectedItem().toString();
+                File selectedVideoUri = new File(videosDirPath, selectedVideo);
+                vvVideo.setVideoURI(Uri.fromFile(selectedVideoUri));
+                vvVideo.start();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
     private void loadVideoDir() {
@@ -88,7 +108,7 @@ public class ActivityVideo extends AppCompatActivity {
             }
         }
 
-        ArrayAdapter<String> adapterVideos = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, videosList);
+        ArrayAdapter<String> adapterVideos = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, videosList);
         spnVideos = findViewById(R.id.spnVideos);
         spnVideos.setAdapter(adapterVideos);
 
