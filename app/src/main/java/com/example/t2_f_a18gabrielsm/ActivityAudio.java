@@ -172,8 +172,10 @@ public class ActivityAudio extends AppCompatActivity {
 
         File[] audiosFiles = audiosDir.listFiles();
         ArrayList<String> audiosList = new ArrayList<>();
-        for (File audio : audiosFiles) {
-            audiosList.add(audio.getName());
+        if (audiosFiles != null) {
+            for (File audio : audiosFiles) {
+                audiosList.add(audio.getName());
+            }
         }
 
         ArrayAdapter<String> adapterAudios = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, audiosList);

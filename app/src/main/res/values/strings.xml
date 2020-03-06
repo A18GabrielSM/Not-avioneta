@@ -21,11 +21,12 @@
     <string name="insertFailedToast">"Error ao engadir a base de datos: "</string>
     <string name="insertSuccessToast">"Engadido a base de datos: "</string>
     <string name="emptyURLToast">O campo non pode estar baleiro</string>
-    <string name="downloadURL">https://manuais.iessanclemente.net/images/5/53/Salaries2.xml</string>
+    <string name="downloadURL">https://manuais.iessanclemente.net/images/5/53/Salaries.xml</string>
     <string name="btnDownload">Procesado XML</string>
     <string name="btnShowSalaries">Mostrar Salarios</string>
     <string name="btnSalariesToFile">Salarios a arquivo</string>
     <string name="rbRed">Vermello</string>
     <string name="rbGreen">Verde</string>
     <string name="rbBlue">Azul</string>
+    <string name="notMountedToast">A SD Card non esta montada</string>
 </resources>

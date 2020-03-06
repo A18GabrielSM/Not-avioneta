@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
@@ -63,17 +64,23 @@ public class ActivityVideo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-                Date date = new Date();
-                String videoName = sdf.format(date);
+                String state = Environment.getExternalStorageState();
 
-                StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                StrictMode.setVmPolicy(builder.build());
+                if (state.equals(Environment.MEDIA_MOUNTED)){
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+                    Date date = new Date();
+                    String videoName = sdf.format(date);
 
-                videosDir = new File(videosDirPath, videoName + ".mp4");
-                Intent recordVideo = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                recordVideo.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(videosDir));
-                startActivityForResult(recordVideo, RECORD_VIDEO_REQUEST);
+                    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                    StrictMode.setVmPolicy(builder.build());
+
+                    videosDir = new File(videosDirPath, videoName + ".mp4");
+                    Intent recordVideo = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                    recordVideo.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(videosDir));
+                    startActivityForResult(recordVideo, RECORD_VIDEO_REQUEST);
+                } else {
+                    Toast.makeText(ActivityVideo.this, R.string.notMountedToast, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -111,6 +118,7 @@ public class ActivityVideo extends AppCompatActivity {
         ArrayAdapter<String> adapterVideos = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, videosList);
         spnVideos = findViewById(R.id.spnVideos);
         spnVideos.setAdapter(adapterVideos);
+        spnVideos.setSelection(videosList.size()-1);
 
     }
 
