@@ -37,8 +37,6 @@ public class ActivityAudio extends AppCompatActivity {
     MediaRecorder mediaRecorder;
     MediaPlayer mediaPlayer;
     String selectedAudio;
-    Thread audioThread;
-
     Spinner spnAudios;
 
     @Override

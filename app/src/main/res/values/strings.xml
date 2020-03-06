@@ -13,4 +13,9 @@
     <string name="noAudioToast">Non hai audio reproducindose</string>
     <string name="recordingDialog">Gravando</string>
     <string name="recordingDialogStop">Parar</string>
+    <string name="btnPlay">Reproducir</string>
+    <string name="btnStop">Parar</string>
+    <string name="btnRewind">Rebobinar</string>
+    <string name="btnPause">Pausar</string>
+    <string name="btnRecord">Gravar</string>
 </resources>
