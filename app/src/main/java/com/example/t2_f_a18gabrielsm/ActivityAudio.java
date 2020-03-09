@@ -131,8 +131,10 @@ public class ActivityAudio extends AppCompatActivity {
                         loadAudios();
                     }
                 });
+
                 builder.setCancelable(false);
                 builder.show();
+
             }
         });
     }
