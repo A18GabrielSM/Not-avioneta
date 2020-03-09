@@ -1,8 +1,11 @@
 package com.example.t2_f_a18gabrielsm;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -17,8 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import org.w3c.dom.Text;
 
@@ -30,6 +35,7 @@ import java.util.Date;
 public class ActivityVideo extends AppCompatActivity {
 
     int RECORD_VIDEO_REQUEST = 0;
+    int WRITE_PERMISSION = 1;
 
     File videosDirPath;
     File videosDir;
@@ -59,7 +65,7 @@ public class ActivityVideo extends AppCompatActivity {
     }
 
     private void loadClicks() {
-        Button btnRecordVideo = findViewById(R.id.btnRecordVideo);
+        final Button btnRecordVideo = findViewById(R.id.btnRecordVideo);
         btnRecordVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,17 +73,15 @@ public class ActivityVideo extends AppCompatActivity {
                 String state = Environment.getExternalStorageState();
 
                 if (state.equals(Environment.MEDIA_MOUNTED)){
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-                    Date date = new Date();
-                    String videoName = sdf.format(date);
-
-                    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                    StrictMode.setVmPolicy(builder.build());
-
-                    videosDir = new File(videosDirPath, videoName + ".mp4");
-                    Intent recordVideo = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                    recordVideo.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(videosDir));
-                    startActivityForResult(recordVideo, RECORD_VIDEO_REQUEST);
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)  {
+                            ActivityCompat.requestPermissions(ActivityVideo.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_PERMISSION);
+                        } else {
+                            recordVideo();
+                        }
+                    } else {
+                        recordVideo();
+                    }
                 } else {
                     Toast.makeText(ActivityVideo.this, R.string.notMountedToast, Toast.LENGTH_SHORT).show();
                 }
@@ -99,6 +103,20 @@ public class ActivityVideo extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void recordVideo() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        Date date = new Date();
+        String videoName = sdf.format(date);
+
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
+        videosDir = new File(videosDirPath, videoName + ".mp4");
+        Intent recordVideo = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        recordVideo.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(videosDir));
+        startActivityForResult(recordVideo, RECORD_VIDEO_REQUEST);
     }
 
     private void loadVideoDir() {
@@ -135,5 +153,17 @@ public class ActivityVideo extends AppCompatActivity {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == WRITE_PERMISSION && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                recordVideo();
+            } else {
+                Toast.makeText(this, "O permiso de escritura é necesario", Toast.LENGTH_SHORT).show();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
